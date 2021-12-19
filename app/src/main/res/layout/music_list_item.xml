@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/music_list_item_title"
+        android:layout_width="177dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/music_list_item_play"
+        android:layout_width="101dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@id/music_list_item_title"
+        android:text="Button" />
+</RelativeLayout>
