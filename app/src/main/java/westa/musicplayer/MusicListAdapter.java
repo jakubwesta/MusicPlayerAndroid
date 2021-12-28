@@ -13,10 +13,10 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class MusicListAdapter extends ArrayAdapter<String> {
+public class MusicListAdapter extends ArrayAdapter<Song> {
     private final int layout;
 
-    public MusicListAdapter(Context context, int resource, List<String> objects) {
+    public MusicListAdapter(Context context, int resource, List<Song> objects) {
         super(context, resource, objects);
         layout = resource;
     }
@@ -24,37 +24,50 @@ public class MusicListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder mainViewHolder = null;
+        Song song = getItem(position);
 
         if (convertView == null) {
+            // Sworzenie widoku z xml
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
+
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.title = (TextView) convertView.findViewById(R.id.music_list_item_title);
-            viewHolder.settingsButton = (ImageButton) convertView.findViewById(R.id.music_list_item_play);
-            viewHolder.settingsButton.setOnClickListener(new View.OnClickListener() {
+            viewHolder.titleTxt = convertView.findViewById(R.id.music_list_item_title);
+            viewHolder.settingsBtn = convertView.findViewById(R.id.music_list_item_play);
+
+            // Opcje piosenki
+            viewHolder.settingsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Open options
+                    // TODO Opcje piosenki
                 }
             });
-            viewHolder.title.setOnClickListener(new View.OnClickListener() {
+
+            // Włączenie piosenki
+            viewHolder.titleTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Play song
+                    // TODO Włączenie piosenki
                 }
             });
+
+            viewHolder.titleTxt.setText(song.getTitle());
+
+            /* Podmiana ustawionych .onClickListenerów() do convertView żeby efekt
+            kliknięcia na każdym elemencie listy był taki sam */
             convertView.setTag(viewHolder);
 
-        } else {
+        } else { // Kiedy .getView() odpali się na już stworzonym elemencie listy
             mainViewHolder = (ViewHolder) convertView.getTag();
-            mainViewHolder.title.setText(getItem(position));
+            mainViewHolder.titleTxt.setText(getItem(position).getTitle());
         }
 
         return convertView;
     }
 
+    // Elementy
     private static class ViewHolder {
-        TextView title;
-        ImageButton settingsButton;
+        TextView titleTxt;
+        ImageButton settingsBtn;
     }
 }

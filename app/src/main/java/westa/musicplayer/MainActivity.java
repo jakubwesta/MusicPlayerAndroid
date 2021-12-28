@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private final ArrayList<String> musicListItems = new ArrayList<>();
+    private final ArrayList<Song> musicListItems = new ArrayList<>();
     private MusicListAdapter musicListAdapter;
     private final int FILE_CHOOSER_ACTIVITY_ID = 1;
     private int currentSongId;
@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
         view.setSystemUiVisibility(uiOption);
 
         // Elementy UI
-        addNewSongBtn = (Button) findViewById(R.id.add_new);
-        removeAllSongsBtn = (Button) findViewById(R.id.remove_all);
-        musicList = (ListView) findViewById(R.id.music_list);
-        playSongBtn = (ImageButton) findViewById(R.id.play_song);
-        previousSongBtn = (ImageButton) findViewById(R.id.previous);
-        nextSongBtn = (ImageButton) findViewById(R.id.next);
+        addNewSongBtn = findViewById(R.id.add_new);
+        removeAllSongsBtn = findViewById(R.id.remove_all);
+        musicList = findViewById(R.id.music_list);
+        playSongBtn = findViewById(R.id.play_song);
+        previousSongBtn = findViewById(R.id.previous);
+        nextSongBtn = findViewById(R.id.next);
 
         // Adapter listy piosenek
         musicListAdapter = new MusicListAdapter(this, R.layout.music_list_item, musicListItems);
@@ -120,24 +120,22 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == FILE_CHOOSER_ACTIVITY_ID && resultCode == RESULT_OK) { // Dodawanie wybranych plików do aplikacji
             if (data.getData() != null) { // Pojedyńczy plik
                 Uri fileUri = data.getData();
-                File file = new File(fileUri.getPath());
-                addSongFile(file);
+                addSongFile(new Song(fileUri));
 
             } else if (data.getClipData() != null) { // Wiele plików
                 ClipData fileUris = data.getClipData();
                 for (int i = 0; i < fileUris.getItemCount(); i++) {
                     ClipData.Item itemUri = fileUris.getItemAt(i);
-                    File file = new File(itemUri.getUri().getPath());
-                    addSongFile(file);
+                    addSongFile(new Song(itemUri.getUri()));
                 }
             }
         }
     }
 
-    private void addSongFile(File file) {
-        System.out.println(file.getName());
-        System.out.println(file.getPath());
-        musicListAdapter.add(file.getName());
+    private void addSongFile(Song song) {
+        System.out.println(song.getTitle());
+        System.out.println(song.getUri());
+        musicListAdapter.add(song);
     }
 
     private void playSong() {
