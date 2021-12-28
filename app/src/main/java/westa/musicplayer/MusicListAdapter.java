@@ -6,15 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class MusicListAdapter extends ArrayAdapter<String> {
     private final int layout;
+
 
     public MusicListAdapter(Context context, int resource, List<String> objects) {
         super(context, resource, objects);
@@ -29,11 +32,18 @@ public class MusicListAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(layout, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.title = (TextView) convertView.findViewById(R.id.music_list_item_title);
-            viewHolder.playButton = (Button) convertView.findViewById(R.id.music_list_item_play);
-            viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
+            viewHolder.settingsButton = (ImageButton) convertView.findViewById(R.id.music_list_item_play);
+            viewHolder.songId = MainActivity.nextSongId;
+            viewHolder.settingsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println("Test");
+                    // Open options
+                }
+            });
+            viewHolder.title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Play song
                 }
             });
             convertView.setTag(viewHolder);
@@ -48,6 +58,7 @@ public class MusicListAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder {
         TextView title;
-        Button playButton;
+        ImageButton settingsButton;
+        int songId;
     }
 }
