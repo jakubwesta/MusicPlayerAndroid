@@ -1,8 +1,6 @@
 package westa.musicplayer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,15 +9,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.nio.file.Path;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private final ArrayList<String> musicListItems = new ArrayList<>();
     private MusicListAdapter musicListAdapter;
-    public static int nextSongId = 0;
-    private HashMap<Integer, Path> musicPaths = new HashMap<>();
+    private final int FILE_CHOOSER_ACTIVITY_ID = 1;
+    private int currentSongId;
+    private boolean isPlaying = false;
     Button addNewSongBtn;
     Button removeAllSongsBtn;
     ListView musicList;
@@ -49,38 +50,97 @@ public class MainActivity extends AppCompatActivity {
         musicListAdapter = new MusicListAdapter(this, R.layout.music_list_item, musicListItems);
         musicList.setAdapter(musicListAdapter);
 
-
+        // Otwieranie menu wyboru plików
         addNewSongBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // musicListAdapter.add("Test item " + nextSongId);
-                // nextSongId += 1;
-
-                Intent intent = new Intent().setType("*/*").setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Wybierz piosenki do dodania"), 1);
+                Intent intent = new Intent()
+                        .setType("*/*") // "audio/*"
+                        .setAction(Intent.ACTION_GET_CONTENT)
+                        .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(Intent.createChooser(intent, "Wybierz piosenki do dodania"), FILE_CHOOSER_ACTIVITY_ID);
             }
         });
 
+        // Czyszczenie listy piosenek
+        removeAllSongsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO PopUp potwierdzjący
+                musicListItems.clear();
+                musicListAdapter.notifyDataSetChanged();
+                currentSongId = 0;
+                isPlaying = false;
+                playSongBtn.setImageResource(R.drawable.play);
+            }
+        });
 
+        // Granie piosenki
+        playSongBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isPlaying) {
+                    isPlaying = false;
+                    playSongBtn.setImageResource(R.drawable.pause);
+                } else {
+                    isPlaying = true;
+                    playSongBtn.setImageResource(R.drawable.play);
+                }
+            }
+        });
+
+        // Kolejna piosenka
+        nextSongBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (musicListItems.size() - 1 != currentSongId) {
+                    currentSongId += 1;
+                } else {
+                    currentSongId = 0;
+                }
+            }
+        });
+
+        // Poprzenia piosenka
+        previousSongBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentSongId != 0) {
+                    currentSongId -= 1;
+                } else {
+                    currentSongId = musicListItems.size() - 1;
+                }
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Uri selectedMusicFile = data.getData();
-            System.out.println(data.getData());
+        if (requestCode == FILE_CHOOSER_ACTIVITY_ID && resultCode == RESULT_OK) { // Dodawanie wybranych plików do aplikacji
+            if (data.getData() != null) { // Pojedyńczy plik
+                Uri fileUri = data.getData();
+                File file = new File(fileUri.getPath());
+                addSongFile(file);
+
+            } else if (data.getClipData() != null) { // Wiele plików
+                ClipData fileUris = data.getClipData();
+                for (int i = 0; i < fileUris.getItemCount(); i++) {
+                    ClipData.Item itemUri = fileUris.getItemAt(i);
+                    File file = new File(itemUri.getUri().getPath());
+                    addSongFile(file);
+                }
+            }
         }
     }
 
-    private void createMusicChooser() {
-        Intent intent = new Intent().setType("*/*").setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Wybierz piosenki do dodania"), 123);
+    private void addSongFile(File file) {
+        System.out.println(file.getName());
+        System.out.println(file.getPath());
+        musicListAdapter.add(file.getName());
     }
 
-    private void addSong(String name, Path path) {
-        musicListAdapter.add(name);
-        musicPaths.put(nextSongId, path);
-        nextSongId += 1;
+    private void playSong() {
+
     }
 }
