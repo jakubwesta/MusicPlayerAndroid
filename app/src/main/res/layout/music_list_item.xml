@@ -16,13 +16,17 @@
         android:id="@+id/music_list_item_title"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:gravity="center"
         android:text="TextView"
+        android:textAlignment="viewStart"
+        android:textSize="24sp"
+        android:background="@drawable/state_selector"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/music_list_item_play"
+        android:id="@+id/music_list_item_details"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/settings_dots"

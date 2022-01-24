@@ -5,9 +5,14 @@
       <map>
         <entry key="..\:/Users/jakub/.gradle/caches/transforms-3/16349600783fa4c0732e670111179c78/transformed/appcompat-1.2.0/res/layout/support_simple_spinner_dropdown_item.xml" value="0.5744791666666667" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.434375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/colors.xml" value="3.232142857142857" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.590625" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/state_selector.xml" value="0.4713541666666667" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/music_list_item.xml" value="0.67" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/song_destails_menu.xml" value="0.45416666666666666" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/song_details_popup.xml" value="0.4552083333333333" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/song_settings_popup.xml" value="0.4552083333333333" />
       </map>
     </option>
   </component>
