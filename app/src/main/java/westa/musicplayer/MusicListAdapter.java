@@ -54,18 +54,14 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
             viewHolder.titleTxt.setText(song.getTitle());
 
             /* Podmiana ustawionych .onClickListenerów() do convertView żeby efekt
-            kliknięcia na każdym elemencie listy był taki sam */
+            kliknięcia na każdym elemencie listy był różny w zależnośći od tego na jakim się kliknęłó */
             convertView.setTag(viewHolder);
-
-        } else { // Kiedy .getView() odpali się na już stworzonym elemencie listy
-            mainViewHolder = (ViewHolder) convertView.getTag();
-            mainViewHolder.titleTxt.setText(getItem(position).getTitle());
         }
 
         return convertView;
     }
 
-    // Elementy
+    // Elementy xmla
     private static class ViewHolder {
         TextView titleTxt;
         ImageButton settingsBtn;
