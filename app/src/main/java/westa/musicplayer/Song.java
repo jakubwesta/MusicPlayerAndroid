@@ -37,10 +37,12 @@ public class Song {
         } else {
             if (artist != null) {
                 return artist;
-            } else {
-                return "Nie ma danych";
             }
+            //else {
+            //   return "Nie ma danych";
+            //}
         }
+        return null;
     }
 
     public int getDuration() {

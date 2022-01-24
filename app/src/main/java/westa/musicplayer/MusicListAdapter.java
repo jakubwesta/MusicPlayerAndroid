@@ -1,6 +1,9 @@
 package westa.musicplayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +55,20 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
                                     MainActivity.musicListItems.remove(position);
                                     return true;
                                 case R.id.see_dong_details:
-                                    // TODO
+                                    String message = "Tytuł: " + song.getTitle() + "\n" +
+                                                    "Autor: " + song.getAuthor() + "\n" +
+                                                    "Album: " + song.getMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM) + "\n" +
+                                                    "Bitrate: " + song.getMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+                                    new AlertDialog.Builder(getContext())
+                                            .setTitle("Dane utworu")
+                                            .setMessage(message)
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    ;
+                                                }
+                                            })
+                                            .show();
                                     return true;
                             }
                             return true;
