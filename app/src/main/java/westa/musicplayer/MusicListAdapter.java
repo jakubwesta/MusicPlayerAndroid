@@ -16,11 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MusicListAdapter extends ArrayAdapter<Song> {
     private final int layout;
-    private View activeView;
 
     public MusicListAdapter(Context context, int resource, List<Song> objects) {
         super(context, resource, objects);
@@ -28,7 +28,7 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
     }
 
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mainViewHolder = null;
         Song song = getItem(position);
 
@@ -53,6 +53,7 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
                             switch (menuItem.getItemId()) {
                                 case R.id.delete_song:
                                     MainActivity.musicListItems.remove(position);
+                                    ((MusicListAdapter) MainActivity.musicList.getAdapter()).notifyDataSetChanged();
                                     return true;
                                 case R.id.see_dong_details:
                                     String message = "Tytuł: " + song.getTitle() + "\n" +
@@ -84,11 +85,6 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
                 public void onClick(View view) {
                     MainActivity.isPlaying = true;
                     MainActivity.isPaused = false;
-                    if (activeView != null) {
-                        activeView.setSelected(false);
-                    }
-                    activeView = view;
-                    view.setSelected(true);
                     MainActivity.currentSongId = position;
                     MainActivity.playsong();
                 }

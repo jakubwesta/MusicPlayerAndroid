@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public static final ArrayList<Song> musicListItems = new ArrayList<>();
+    public static ArrayList<Song> musicListItems = new ArrayList<>();
     private MusicListAdapter musicListAdapter;
     private final int FILE_CHOOSER_ACTIVITY_ID = 1;
     public static Context context;
@@ -184,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.setDataSource(context ,musicListItems.get(currentSongId).getUri());
             mediaPlayer.prepare();
             mediaPlayer.start();
-            musicList.setSelection(currentSongId);
+            musicList.setItemChecked(currentSongId, true);
+            System.out.println(musicList.getCheckedItemIds());
             isPlaying = true;
             isPaused = false;
             playSongBtn.setImageResource(R.drawable.pause);
@@ -223,21 +224,8 @@ public class MainActivity extends AppCompatActivity {
         String MIMEtype = getContentResolver().getType(uri);
         Song song = new Song(uri, fileName, fileSize, MIMEtype, this);
 
-        System.out.println(fileSize);
-        System.out.println(song.getMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-        System.out.println(song.getTitle());
-        System.out.println(song.getMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR));
-        System.out.println(song.getMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-        System.out.println(song.getMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-
-        musicListAdapter.add(song);
-    }
-
-    public void showSongDetails(View view) {
-    }
-
-    private Song getCurrentSong() {
-        return musicListItems.get(currentSongId);
+        musicListItems.add(song);
+        musicListAdapter.notifyDataSetChanged();
     }
 
     // Wykrywanie amiany głośności urządzenia

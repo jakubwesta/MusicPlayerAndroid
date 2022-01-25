@@ -38,9 +38,6 @@ public class Song {
             if (artist != null) {
                 return artist;
             }
-            //else {
-            //   return "Nie ma danych";
-            //}
         }
         return null;
     }
