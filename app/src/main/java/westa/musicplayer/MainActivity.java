@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.media.AudioManager;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.SeekBar;
 
 import androidx.annotation.Nullable;
@@ -146,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // Pasek dźwięku
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         volumeBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumeBar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
@@ -185,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.prepare();
             mediaPlayer.start();
             musicList.setItemChecked(currentSongId, true);
-            System.out.println(musicList.getCheckedItemIds());
             isPlaying = true;
             isPaused = false;
             playSongBtn.setImageResource(R.drawable.pause);
@@ -220,10 +215,9 @@ public class MainActivity extends AppCompatActivity {
         cursor.moveToFirst();
 
         String fileName = cursor.getString(nameIndex);
-        Long fileSize = cursor.getLong(sizeIndex);
-        String MIMEtype = getContentResolver().getType(uri);
-        Song song = new Song(uri, fileName, fileSize, MIMEtype, this);
+        Song song = new Song(uri, fileName, this);
 
+        cursor.close();
         musicListItems.add(song);
         musicListAdapter.notifyDataSetChanged();
     }

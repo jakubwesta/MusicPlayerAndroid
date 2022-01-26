@@ -13,10 +13,6 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MusicListAdapter extends ArrayAdapter<Song> {
@@ -29,7 +25,6 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder mainViewHolder = null;
         Song song = getItem(position);
 
         if (convertView == null) {
@@ -66,7 +61,7 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
                                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                                    ;
+
                                                 }
                                             })
                                             .show();
