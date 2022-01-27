@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Granie piosenki
+        // Granie i pauzowanie piosenki
         playSongBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Odpalanie dźwięku - MediaPlayer
     public static void playsong() {
         mediaPlayer.reset();
         try {
@@ -211,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
         // Używanie Cursora żeby dostać nazwę i rozmiar pliku pod uri
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-        int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
         cursor.moveToFirst();
 
         String fileName = cursor.getString(nameIndex);

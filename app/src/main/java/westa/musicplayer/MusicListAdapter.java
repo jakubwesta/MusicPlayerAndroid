@@ -40,6 +40,7 @@ public class MusicListAdapter extends ArrayAdapter<Song> {
             viewHolder.settingsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // PopUp do usnięcia / sprawdzenia piosenki
                     PopupMenu popupMenu = new PopupMenu(getContext(), viewHolder.settingsBtn);
                     popupMenu.getMenuInflater().inflate(R.menu.song_destails_menu, popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

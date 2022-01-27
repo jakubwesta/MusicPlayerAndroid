@@ -8,6 +8,7 @@ public class Song {
     private final String title;
     private final MediaMetadataRetriever metadataRetriever;
 
+    // Klasa piosenki do pobierania danych z metadaty
     public Song(Uri uri, String fileName, MainActivity mainActivity) {
         this.uri = uri;
         this.title = fileName.substring(0, fileName.lastIndexOf("."));
